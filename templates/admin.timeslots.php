@@ -2,45 +2,61 @@
     <h3 class="text-center">City Based Delivery System</h3>
     <hr>
     <h4 class="text-center">Time Slots</h4>
-    <div class="row mt-4">
-        <div class="col-md-3">
-        <?php 
-   
-            global $wpdb;
-            $table_name = $wpdb->prefix ."vc_cities_group";
-            $cities = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`", OBJECT);?>
-            <select name="city_id" id="city_id" class="vc_input_area">
-            <option  selected disabled>Select city ....</option>
-            <?php foreach ($cities as $city) {
-                echo "<option value='{$city->id}'>{$city->city}</option>";
-            }?>
-            </select>
-            <input type="text" id="city_name" class="vc_input_area" readonly style="display:none">
-            <input type="hidden" id="hidden_city_id" name="hidden_city_id">
-            <input type="hidden" id="slot_id" name="slot_id">
+    <div id="visibleTimeSlot">
+        <div class="row mt-4">
+            <div class="col-md-3">
+            <?php 
+    
+                global $wpdb;
+                $table_name = $wpdb->prefix ."vc_cities_group";
+                $table_times = $wpdb->prefix ."vc_times";
+                $cities = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`", OBJECT);?>
+                <select name="city_id" id="city_id" class="vc_input_area">
+                <option  selected disabled>Select city ....</option>
+                <?php foreach ($cities as $city) {
+                    echo "<option value='{$city->id}'>{$city->city}</option>";
+                }?>
+                </select>
+                
+            </div>
+            <div class="col-md-3">
+            <?php  $times = $wpdb->get_results("SELECT DISTINCT `time_title` FROM $table_times ORDER BY `id`", OBJECT);?>
+                <select name="timeslots" id="timeslots" class="vc_input_area">
+                    <option value="" disabled selected >Select timaslot ....</option>
+                    <?php foreach ($times as $time) {
+                        echo "<option value='{$time->time_title}'>{$time->time_title}</option>";
+                    }?>
+                </select>                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="button-primary vc_button" onclick="vc_add_timeslot_ajax()" id="vc_add_timeslot">Save Timeslot</button>
+            </div>
         </div>
-        <div class="col-md-3">
-            <select name="timeslots" id="timeslots" class="vc_input_area">
-            <option value="" disabled selected >Select timaslot ....</option>
-                <option value="8 AM ">8 AM </option>
-                <option value="9 AM ">9 AM </option>
-                <option value="10 AM ">10 AM </option>
-                <option value="11 AM ">11 AM </option>
-                <option value="12 PM ">12 PM </option>
-                <option value="1 PM ">1 PM </option>
-                <option value="2 PM ">2 PM </option>
-                <option value="3 PM ">3 PM </option>
-                <option value="4 PM ">4 PM </option>
-                <option value="5 PM ">5 PM </option>
-                <option value="6 PM ">6 PM </option>
-                <option value="7 PM ">7 PM </option>
-                <option value="8 PM ">8 PM </option>
-               
-            </select>                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
-        </div>
-        <div class="col-md-3">
-            <button type="button" class="button-primary vc_button" onclick="vc_add_timeslot_ajax()" id="vc_add_timeslot">Save Timeslot</button>
-            <button type="button" class="button-primary vc_button" onclick="vc_update_timeslot_ajax()" id="vc_update_timeslot" style="display:none">Update Tiemslot</button>
+    </div>
+
+    <div id="hiddenTimeSlot" style="display:none">
+        <div class="row mt-4">
+            <div class="col-md-3">
+              <select name="city_id" id="city_idup" class="vc_input_area">
+               <option id="cityUpFill" value="" selected></option>
+                <?php foreach ($cities as $city) {
+                    echo "<option value='{$city->id}'>{$city->city}</option>";
+                }?>
+                </select>
+               <input type="hidden" id="slot_id" name="slot_id">
+            </div>
+            <div class="col-md-3">
+            <?php  $times = $wpdb->get_results("SELECT DISTINCT `time_title` FROM $table_times ORDER BY `id`", OBJECT);?>
+                <select name="timeslots" id="timeslotsup" class="vc_input_area">
+                <option id="timeUpFill" value="" selected></option>
+                    <?php foreach ($times as $time) {
+                        echo "<option value='{$time->time_title}'>{$time->time_title}</option>";
+                    }?>
+                </select>                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="button" class="button-secondary vc_button" onclick="vc_update_timeslot_ajax()" id="vc_update_timeslot" >Update Tiemslot</button>
+            </div>
         </div>
     </div>
 </div>
@@ -49,7 +65,7 @@
                 <thead>
                     <tr>
                         <th>City</th>
-                        <th>Timeslot</th>
+                        <th>Times</th>
                         <th>Actions</th>
                     </tr>
                 </thead>

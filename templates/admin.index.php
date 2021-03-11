@@ -15,7 +15,7 @@
         </div>
         <div class="col-md-3">
             <button type="button" class="button-primary vc_button" onclick="vc_add_city_ajax()" id="vc_add_button">Save City</button>
-            <button type="button" class="button-primary vc_button" onclick="vc_update_city_ajax()" id="vc_update_button" style="display:none">Update City</button>
+            <button type="button" class="button-secondary vc_button" onclick="vc_update_city_ajax()" id="vc_update_button" style="display:none">Update City</button>
         </div>
     </div>
 </div>

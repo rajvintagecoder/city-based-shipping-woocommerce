@@ -100,10 +100,10 @@ function vc_add_times_action()
     $htmlContent = '';
     foreach ($times as $time){
      $htmlContent .="<tr>
-        <td><span id='timetitle_<?=$time->id?>' alt='{$time->id}'>{$time->time_title}</span></td>
-        <td><span id='timefrom_'{$time->id}' >{$time->from_time}</span></td>
+             <td><span id='timetitle_{$time->id}' alt='{$time->id}'>{$time->time_title}</span></td>
+        <td><span id='timefrom_{$time->id}' >{$time->from_time}</span></td>
         <td><span id='timeto_{$time->id}' >{$time->to_time}</span></td>
-        <td><button alt='$time->id' type='button' class='btn btn-sm btn-primary mr-4' onclick=fill_time_for_edit({$time->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
+        <td><button alt='$time->id' type='button' class='btn btn-sm btn-primary mr-4' onclick='fill_time_for_edit({$time->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
           </button><button alt='{$time->id}' type='button' class='btn btn-sm btn-danger' onclick='vc_delete_time_ajax({$time->id})'><i class='fa fa-remove' aria-hidden='true'></i>
           </button>
           </td>
@@ -116,6 +116,69 @@ function vc_add_times_action()
 add_action('wp_ajax_vc_add_times_action', 'vc_add_times_action');
 add_action('wp_ajax_nopriv_vc_add_times_action', 'vc_add_times_action');
 
+
+// Update Times T1-T12
+function vc_update_times_action()
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix ."vc_times";
+    $timeTitle = $_POST['timeTitle'];
+    $fromTime = $_POST['fromTime'];
+    $toTime = $_POST['toTime'];
+    $id = $_POST['id'];
+
+    $wpdb->update($table_name, array(
+        'time_title' =>$timeTitle,
+        'from_time' => $fromTime,
+        'to_time' => $toTime,
+    ), array('id' => $id));
+    $times = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`", OBJECT); 
+    $htmlContent = '';
+    foreach ($times as $time){
+     $htmlContent .="<tr>
+        <td><span id='timetitle_{$time->id}' alt='{$time->id}'>{$time->time_title}</span></td>
+        <td><span id='timefrom_{$time->id}' >{$time->from_time}</span></td>
+        <td><span id='timeto_{$time->id}' >{$time->to_time}</span></td>
+        <td><button alt='$time->id' type='button' class='btn btn-sm btn-primary mr-4' onclick='fill_time_for_edit({$time->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
+          </button><button alt='{$time->id}' type='button' class='btn btn-sm btn-danger' onclick='vc_delete_time_ajax({$time->id})'><i class='fa fa-remove' aria-hidden='true'></i>
+          </button>
+          </td>
+        </tr>";
+    }
+    echo $htmlContent;
+    wp_die();
+}
+
+add_action('wp_ajax_vc_update_times_action', 'vc_update_times_action');
+add_action('wp_ajax_nopriv_vc_update_times_action', 'vc_update_times_action');
+
+function vc_delete_time_ajax()
+{
+    global $wpdb;
+    $table_name = $wpdb->prefix ."vc_times";
+    $id = $_POST['id'];
+    $wpdb->delete($table_name, array('id' => $id));
+    $totalCity = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`",OBJECT);
+    $times = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`", OBJECT); 
+    $htmlContent = '';
+    foreach ($times as $time){
+     $htmlContent .="<tr>
+        <td><span id='timetitle_{$time->id}' alt='{$time->id}'>{$time->time_title}</span></td>
+        <td><span id='timefrom_{$time->id}' >{$time->from_time}</span></td>
+        <td><span id='timeto_{$time->id}' >{$time->to_time}</span></td>
+        <td><button alt='$time->id' type='button' class='btn btn-sm btn-primary mr-4' onclick='fill_time_for_edit({$time->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
+          </button><button alt='{$time->id}' type='button' class='btn btn-sm btn-danger' onclick='vc_delete_time_ajax({$time->id})'><i class='fa fa-remove' aria-hidden='true'></i>
+          </button>
+          </td>
+        </tr>";
+    }
+    echo $htmlContent;
+    wp_die();
+
+}
+
+add_action('wp_ajax_vc_delete_time_ajax', 'vc_delete_time_ajax');
+add_action('wp_ajax_nopriv_vc_delete_time_ajax', 'vc_delete_time_ajax');
 
 //add timeslot ajax
 

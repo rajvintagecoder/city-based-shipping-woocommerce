@@ -2,69 +2,138 @@
     <h3 class="text-center">City Based Delivery System</h3>
     <hr>
     <h4 class="text-center">Time Slots</h4>
-    <div class="row mt-4">
-        <div class="col-md-3">
-        <select name="timetitle" id="timetitle" class="vc_input_area">
-            <option value="" disabled selected >Title ....</option>
-                <option value="T1">T1 </option>
-                <option value="T2">T2 </option>
-                <option value="T3">T3 </option>
-                <option value="T4">T4 </option>
-                <option value="T5">T5 </option>
-                <option value="T6">T6 </option>
-                <option value="T7">T7 </option>
-                <option value="T8">T8 </option>
-                <option value="T9">T9 </option>
-                <option value="T10">T10 </option>
-                <option value="T11 ">T11 </option>
-                <option value="T12 ">T12 </option>
-                
-            </select>    
-        </div>
-        <div class="col-md-3">
-            <select name="fromtime" id="fromtime" class="vc_input_area">
-            <option value="" disabled selected >From ....</option>
-                <option value="8 AM ">8 AM </option>
-                <option value="9 AM ">9 AM </option>
-                <option value="10 AM ">10 AM </option>
-                <option value="11 AM ">11 AM </option>
-                <option value="12 PM ">12 PM </option>
-                <option value="1 PM ">1 PM </option>
-                <option value="2 PM ">2 PM </option>
-                <option value="3 PM ">3 PM </option>
-                <option value="4 PM ">4 PM </option>
-                <option value="5 PM ">5 PM </option>
-                <option value="6 PM ">6 PM </option>
-                <option value="7 PM ">7 PM </option>
-                <option value="8 PM ">8 PM </option>
-                <option value="9 PM ">9 PM </option>
-               
-            </select>                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
-        </div>
+    <div id="addTimeRow">
+            <div class="row mt-4" id="">
+                <div class="col-md-3">
+                        <select name="timetitle" id="timetitle" class="vc_input_area">
+                            <option value="" disabled selected >Title ....</option>
+                            <option value="T1">T1 </option>
+                            <option value="T2">T2 </option>
+                            <option value="T3">T3 </option>
+                            <option value="T4">T4 </option>
+                            <option value="T5">T5 </option>
+                            <option value="T6">T6 </option>
+                            <option value="T7">T7 </option>
+                            <option value="T8">T8 </option>
+                            <option value="T9">T9 </option>
+                            <option value="T10">T10 </option>
+                            <option value="T11 ">T11 </option>
+                            <option value="T12 ">T12 </option>
+                        </select>    
+                </div>
+                <div class="col-md-3">
+                            <select name="fromtime" id="fromtime" class="vc_input_area">
+                                <option value="" disabled selected >From ....</option>
+                                <option value="8 AM ">8 AM </option>
+                                <option value="9 AM ">9 AM </option>
+                                <option value="10 AM ">10 AM </option>
+                                <option value="11 AM ">11 AM </option>
+                                <option value="12 PM ">12 PM </option>
+                                <option value="1 PM ">1 PM </option>
+                                <option value="2 PM ">2 PM </option>
+                                <option value="3 PM ">3 PM </option>
+                                <option value="4 PM ">4 PM </option>
+                                <option value="5 PM ">5 PM </option>
+                                <option value="6 PM ">6 PM </option>
+                                <option value="7 PM ">7 PM </option>
+                                <option value="8 PM ">8 PM </option>
+                                <option value="9 PM ">9 PM </option>
+                            
+                            </select>                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
+                </div>
 
-        <div class="col-md-3">
-            <select name="totime" id="totimes" class="vc_input_area">
-            <option value="" disabled selected >To ....</option>
-                <option value="8 AM ">8 AM </option>
-                <option value="9 AM ">9 AM </option>
-                <option value="10 AM ">10 AM </option>
-                <option value="11 AM ">11 AM </option>
-                <option value="12 PM ">12 PM </option>
-                <option value="1 PM ">1 PM </option>
-                <option value="2 PM ">2 PM </option>
-                <option value="3 PM ">3 PM </option>
-                <option value="4 PM ">4 PM </option>
-                <option value="5 PM ">5 PM </option>
-                <option value="6 PM ">6 PM </option>
-                <option value="7 PM ">7 PM </option>
-                <option value="8 PM ">8 PM </option>
-                <option value="9 PM ">9 PM </option>
-               
-            </select>                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
-        </div>
-        <div class="col-md-3">
-            <button type="button" class="button-primary vc_button" onclick="vc_add_times_ajax()" id="vc_add_times">Save Times</button>
-            <button type="button" class="button-primary vc_button" onclick="vc_update_times_ajax()" id="vc_update_times" style="display:none">Update Tiems</button>
+                <div class="col-md-3">
+                            <select name="totime" id="totimes" class="vc_input_area">
+                                <option value="" disabled selected >To ....</option>
+                                <option value="8 AM ">8 AM </option>
+                                <option value="9 AM ">9 AM </option>
+                                <option value="10 AM ">10 AM </option>
+                                <option value="11 AM ">11 AM </option>
+                                <option value="12 PM ">12 PM </option>
+                                <option value="1 PM ">1 PM </option>
+                                <option value="2 PM ">2 PM </option>
+                                <option value="3 PM ">3 PM </option>
+                                <option value="4 PM ">4 PM </option>
+                                <option value="5 PM ">5 PM </option>
+                                <option value="6 PM ">6 PM </option>
+                                <option value="7 PM ">7 PM </option>
+                                <option value="8 PM ">8 PM </option>
+                                <option value="9 PM ">9 PM </option>
+                            
+                            </select>                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="button-primary vc_button" onclick="vc_add_times_ajax()" id="vc_add_times">Save Times</button>
+                </div>
+            </div>
+    </div>  
+
+    <div id="updateTimeRow" style="display:none">
+        <div class="row mt-4" >
+             <input type="hidden" id="updateTimeID" value="">
+                <div class="col-md-3">
+                    <select name="timetitle" id="timetitleup" class="vc_input_area">
+                    <option id="updatedOtionTitle" value="" selected></option>
+                        <option value="T1">T1 </option>
+                        <option value="T2">T2 </option>
+                        <option value="T3">T3 </option>
+                        <option value="T4">T4 </option>
+                        <option value="T5">T5 </option>
+                        <option value="T6">T6 </option>
+                        <option value="T7">T7 </option>
+                        <option value="T8">T8 </option>
+                        <option value="T9">T9 </option>
+                        <option value="T10">T10 </option>
+                        <option value="T11 ">T11 </option>
+                        <option value="T12 ">T12 </option>
+                        
+                    </select>    
+                </div>
+                <div class="col-md-3">
+                    <select name="fromtime" id="fromtimeup" class="vc_input_area">
+                    <option id="updatedOtionFromTime" value="" selected></option>
+                        <option value="8 AM ">8 AM </option>
+                        <option value="9 AM ">9 AM </option>
+                        <option value="10 AM ">10 AM </option>
+                        <option value="11 AM ">11 AM </option>
+                        <option value="12 PM ">12 PM </option>
+                        <option value="1 PM ">1 PM </option>
+                        <option value="2 PM ">2 PM </option>
+                        <option value="3 PM ">3 PM </option>
+                        <option value="4 PM ">4 PM </option>
+                        <option value="5 PM ">5 PM </option>
+                        <option value="6 PM ">6 PM </option>
+                        <option value="7 PM ">7 PM </option>
+                        <option value="8 PM ">8 PM </option>
+                        <option value="9 PM ">9 PM </option>
+                    
+                    </select>                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
+                </div>
+
+                <div class="col-md-3">
+                    <select name="totime" id="totimesup" class="vc_input_area">
+                
+                        <option id="updatedOtionToTime" value="" selected></option>
+                        <option value="8 AM ">8 AM </option>
+                        <option value="9 AM ">9 AM </option>
+                        <option value="10 AM ">10 AM </option>
+                        <option value="11 AM ">11 AM </option>
+                        <option value="12 PM ">12 PM </option>
+                        <option value="1 PM ">1 PM </option>
+                        <option value="2 PM ">2 PM </option>
+                        <option value="3 PM ">3 PM </option>
+                        <option value="4 PM ">4 PM </option>
+                        <option value="5 PM ">5 PM </option>
+                        <option value="6 PM ">6 PM </option>
+                        <option value="7 PM ">7 PM </option>
+                        <option value="8 PM ">8 PM </option>
+                        <option value="9 PM ">9 PM </option>
+                    
+                    </select>                                                                                                                                                                                                                                                                                                                                                                                                                                </select>
+                </div>
+                <div class="col-md-3">
+                    <button type="button" class="button-secondary vc_button" onclick="vc_update_times_ajax()" id="vc_update_times">Update Tiems</button>
+                </div>
         </div>
     </div>
 </div>
@@ -75,6 +144,7 @@
                         <th>Title</th>
                         <th>From</th>
                         <th>To</th>
+                        <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody id="timeTbody">

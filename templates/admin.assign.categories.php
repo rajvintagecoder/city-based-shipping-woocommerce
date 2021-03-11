@@ -12,43 +12,46 @@
   $all_categories = get_categories( $args );
 ?>
 
-<div class="container mt-4 p-2">
+<div class="container mt-4 ">
     <h3 class="text-center">City Based Delivery System</h3>
     <hr>
     <h4 class="text-center">Assign Categories</h4>
     <div id="visible_row">
-    <div class="row mt-4" >
-        <div class="col-md-3">
-        <?php 
-           
-            global $wpdb;
-            $table_name = $wpdb->prefix ."vc_cities_group";
-            $cities = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`", OBJECT);?>
-            <select name="city_id" id="city_id" class="vc_input_area">
-            <option  selected disabled>Select city ....</option>
-            <?php foreach ($cities as $city) {
-                echo "<option value='{$city->id}'>{$city->city}</option>";
-            }?>
-            </select>
-           
+        <div class="row mt-4" >
+                <div class="col-md-3">
+                <?php 
+                
+                    global $wpdb;
+                    $table_name = $wpdb->prefix ."vc_cities_group";
+                    $cities = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`", OBJECT);?>
+                    <select name="city_id" id="city_id" class="vc_input_area">
+                    <option  selected disabled>Select city ....</option>
+                    <?php foreach ($cities as $city) {
+                        echo "<option value='{$city->id}'>{$city->city}</option>";
+                    }?>
+                    </select>
+                
+                </div>
+
+                <div class="col-md-3">
+                        <select name="category_id" id="category_id" class="vc_input_area">
+                        <option value="" selected disabled>Select a category...</option>
+                        <?php foreach ($all_categories as $cat) {
+                            if($cat->category_parent == 0) { ?>
+                                <option value="<?=$cat->term_id?>"><?=$cat->name?></option>
+                        <?php  } } ?>
+                        </select>                                                                                                                                                                                                                                                                                                                                                                                                                     </select>
+                </div>
+
+                <div class="col-md-3">
+                    <button type="button" class="button-primary vc_button" onclick="vc_assign_city_ajax()" id="vc_assign_city">Assign Category</button>
+                </div>
         </div>
-        <div class="col-md-3">
-                <select name="category_id" id="category_id" class="vc_input_area">
-                <option value="" selected disabled>Select a category...</option>
-                <?php foreach ($all_categories as $cat) {
-                      if($cat->category_parent == 0) { ?>
-                         <option value="<?=$cat->term_id?>"><?=$cat->name?></option>
-                <?php  } } ?>
-                </select>                                                                                                                                                                                                                                                                                                                                                                                                                     </select>
-        </div>
-        <div class="col-md-3">
-            <button type="button" class="button-primary vc_button" onclick="vc_assign_city_ajax()" id="vc_assign_city">Assign Category</button>
-        </div>
-    </div>
-    
+   </div>
 </div>
+
 <div class="container" id="hidden_row" style="display:none">
-<div class="row mt-4" >
+    <div class="row mt-4" >
         <div class="col-md-3">
             <input type="hidden" id="city_hidden_id"value="">
             <select name="city_hidden_update" id="city_hidden_update" class="vc_input_area">
@@ -68,11 +71,13 @@
                 </select>   
         </div>
         <div class="col-md-3">
-        <button type="button" class="button-primary vc_button" onclick="vc_update_assigned_city_ajax()" id="vc_update_assign_city">Update Assigned Category</button>
+        <button type="button" class="button-secondary vc_button" onclick="vc_update_assigned_city_ajax()" id="vc_update_assign_city">Update Assigned Category</button>
         </div>
     </div>
 </div>
-<div class="container mt-2 p-2">
+
+
+<div class="container mt-4">
             <table class="table table-dark table-striped table-hover">
                 <thead>
                     <tr>

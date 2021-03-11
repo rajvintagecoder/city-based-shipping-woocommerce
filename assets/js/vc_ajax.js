@@ -12,6 +12,7 @@
             jQuery('.alert').show();
      }
         if(isValid){
+            jQuery('.alert').hide();
         jQuery.ajax({
             url: vc_ajax_url.ajax_url,
             type: 'post',
@@ -39,27 +40,35 @@
         var vc_delivery_fee = jQuery('#vc_delivery_fee').val();
         var vc_minimum_order = jQuery('#vc_minimum_order').val();
         var vc_id = jQuery('#vc_id').val();
-        jQuery.ajax({
-            url: vc_ajax_url.ajax_url,
-            type: 'post',
-            // dataType: 'JSON',
-            data: {
-                action: 'vc_update_city_ajax',
-                city: vc_city,
-                delivery_fee: vc_delivery_fee,
-                minimum_order: vc_minimum_order,
-                id: vc_id,
-            },
-            success: function (data) {
-               jQuery('#vc_tableBody').html(data);
-               jQuery('#vc_add_button').css('display','block');
-               jQuery('#vc_update_button').css('display','none');
-               jQuery('#vc_city').val('');
-               jQuery('#vc_delivery_fee').val('');
-               jQuery('#vc_minimum_order').val('');
-               jQuery('#vc_id').val('id');
-            }
-        });
+        var isValid = true;
+        if(vc_city.length == 0 || vc_delivery_fee.length == 0 || vc_minimum_order.length == 0){
+            isValid = false;
+            jQuery('.alert').show();
+        }
+        if(isValid){
+            jQuery('.alert').hide();
+                jQuery.ajax({
+                    url: vc_ajax_url.ajax_url,
+                    type: 'post',
+                    // dataType: 'JSON',
+                    data: {
+                        action: 'vc_update_city_ajax',
+                        city: vc_city,
+                        delivery_fee: vc_delivery_fee,
+                        minimum_order: vc_minimum_order,
+                        id: vc_id,
+                    },
+                    success: function (data) {
+                    jQuery('#vc_tableBody').html(data);
+                    jQuery('#vc_add_button').css('display','block');
+                    jQuery('#vc_update_button').css('display','none');
+                    jQuery('#vc_city').val('');
+                    jQuery('#vc_delivery_fee').val('');
+                    jQuery('#vc_minimum_order').val('');
+                    jQuery('#vc_id').val('id');
+                    }
+                });
+        }
     }
 
     //Delete city ajax call
@@ -110,6 +119,64 @@ function vc_add_times_ajax(){
     }
 }
 
+function vc_update_times_ajax(){
+    var timeTitle = jQuery('#timetitleup').val();
+    var fromTime = jQuery('#fromtimeup').val();
+    var toTime = jQuery('#totimesup').val();
+    var id = jQuery('#updateTimeID').val();
+    var isValid = true;
+    if(timeTitle == null || fromTime == null || toTime == null){
+        isValid = false;
+    }
+    if(isValid){
+        jQuery.ajax({
+            url: vc_ajax_url.ajax_url,
+            type: 'post',
+            data: {
+                action: 'vc_update_times_action',
+                timeTitle: timeTitle,
+                fromTime: fromTime,
+                toTime: toTime,
+                id:id
+            },
+            success: function(data){
+                jQuery('#timeTbody').html(data);
+                jQuery('#addTimeRow').css('display','block');
+                jQuery('#updateTimeRow').css('display','none');
+                jQuery('#timetitle').prop('selectedIndex',0);
+                jQuery('#fromtime').prop('selectedIndex',0);
+                jQuery('#totimes').prop('selectedIndex',0);
+            }
+        });
+    }
+}
+
+//Delete time ajax call
+function vc_delete_time_ajax(id) {
+    var vc_id = id;
+    jQuery.ajax({
+        url: vc_ajax_url.ajax_url,
+        type: 'post',
+        data: {
+            action: 'vc_delete_time_ajax',  
+            id: vc_id,
+        },
+        success: function (data) {
+            jQuery('#timeTbody').html(data);
+            jQuery('#timetitle').prop('selectedIndex',0);
+            jQuery('#fromtime').prop('selectedIndex',0);
+            jQuery('#totimes').prop('selectedIndex',0);
+        }
+    });
+}
+
+
+
+
+
+
+
+
     //add time slots
 
     function vc_add_timeslot_ajax(){
@@ -142,8 +209,8 @@ function vc_add_times_ajax(){
     //Update timeslot
 
     function vc_update_timeslot_ajax(){
-        var cityId = jQuery('#hidden_city_id').val();
-        var timeslot = jQuery('#timeslots').val();
+        var cityId = jQuery('#city_idup').val();
+        var timeslot = jQuery('#timeslotsup').val();
         var id = jQuery('#slot_id').val();
         var isValid = true;
         if(cityId.length == 0 || timeslot.length == 0){
@@ -162,12 +229,10 @@ function vc_add_times_ajax(){
             },
             success: function(data){
                 jQuery('#timeslotTbody').html(data);  
+                jQuery('#visibleTimeSlot').css('display','block');
+                jQuery('#hiddenTimeSlot').css('display','none');  
                 jQuery('#city_id').prop('selectedIndex',0);        
                 jQuery('#timeslots').prop('selectedIndex',0); 
-                jQuery('#city_id').css('display','block');
-                jQuery('#vc_add_timeslot').css('display','block');
-                jQuery('#vc_update_timeslot').css('display','none');
-                jQuery('#city_name').css('display','none');   
         
             }
         });
@@ -309,11 +374,11 @@ function vc_update_cityarea_ajax(){
         var categoryId = jQuery('#category_hidden_id').val();
         var id = jQuery('#city_hidden_id').val();
         var isValid = true;
-        if(cityId.length == 0 || categoryId.length == 0){
+        if(cityId == null || categoryId == null){
             isValid = false;
             alert("All fields are required");
         }
-        console.log("Hello World")
+      
 ;        if(isValid){
         jQuery.ajax({
             url: vc_ajax_url.ajax_url,

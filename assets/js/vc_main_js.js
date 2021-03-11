@@ -23,14 +23,15 @@ function fill_form_for_edit(id){
 //fill Time slot data
 
 function fill_timeslot_for_edit(id){
-    jQuery('#city_id').css('display','none');
-    jQuery('#vc_add_timeslot').css('display','none');
-    jQuery('#vc_update_timeslot').css('display','block');
-    jQuery('#city_name').css('display','block');
-    jQuery('#city_name').val(jQuery('#slotcity_'+id).text());
-    jQuery('#hidden_city_id').val(jQuery('#slotcity_'+id).attr('alt'));
+    jQuery('#visibleTimeSlot').css('display','none');
+    jQuery('#hiddenTimeSlot').css('display','block');
     jQuery('#slot_id').val(id);
-}
+    var cityName = jQuery('#slotcity_'+id).text();
+    var cityID = jQuery('#slotcity_'+id).attr('alt');
+    var timeslot = jQuery('#timeslot_'+id).text();
+    jQuery('#timeUpFill').val(timeslot);
+    jQuery('#timeUpFill').text(timeslot);
+}  
 
 //fill city area form
 function fill_cityarea_for_edit(id){
@@ -61,17 +62,18 @@ function fill_assign_city_for_edit(id){
     jQuery('#city_hidden_id').val(id);
 }
 
-// jQuery('.city_select').change(function(){
-//     var city = jQuery(this).val();
-//             jQuery.ajax({
-//                 type : "post",
-//                 url: vc_ajax_url.ajax_url,
-//                 data : {
-//                     action: "vc_get_area_on_checkout_page_load",
-//                     city : city
-//                 },
-//                 success: function(response) {
-//                     console.log('Hello World')
-//                 }
-//             });
-// });
+function fill_time_for_edit(id){
+    jQuery('#addTimeRow').css('display','none');
+    jQuery('#updateTimeRow').css('display','block');
+    var timeTitle = jQuery('#timetitle_'+id).text();
+    var timeFrom = jQuery('#timefrom_'+id).text();
+    var timeTo = jQuery('#timeto_'+id).text();
+    jQuery('#updateTimeID').val(id)
+    jQuery('#updatedOtionTitle').val(timeTitle);
+    jQuery('#updatedOtionTitle').text(timeTitle);
+    jQuery('#updatedOtionFromTime').val(timeFrom);
+    jQuery('#updatedOtionFromTime').text(timeFrom);
+    jQuery('#updatedOtionToTime').val(timeTo);
+    jQuery('#updatedOtionToTime').text(timeTo);
+
+}
