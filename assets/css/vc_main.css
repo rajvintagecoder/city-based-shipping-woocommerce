@@ -1,0 +1,37 @@
+.vc_page_heading {
+    font-size: 25px !important;
+    font-weight: normal !important;
+    text-align: center !important;
+    margin: 17px;
+}
+.vc_bordered {
+    border-top: 1px solid #dddbdb !important;
+    height:20px;
+}
+.vc_container {
+    width: 90%;
+    padding: 25px;
+}
+.vc_input_area {
+    border: none !important;
+    border-radius: 0px !important;
+    box-shadow: 0px 0px 4px 1px rgba(0,0,0,.5) !important;
+    width:100% !important;
+
+}
+select.vc_input_area {
+	font-size: 16px !important;
+}
+.vc_row_field {
+    padding: 10px;
+}
+.vc_row_field label {
+    position: relative;
+    top: -5px;
+    left: -5px;
+}
+.vc_table_container {
+    width: 70% !important;
+    padding: 10px !important;
+    margin-top: 20px !important;
+}
