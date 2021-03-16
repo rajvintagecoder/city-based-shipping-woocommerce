@@ -4,44 +4,36 @@
     function vc_add_city_ajax() {
         jQuery('#errorDelete').css('display','none');
         var vc_city = jQuery('#vc_city').val();
-        var vc_delivery_fee = jQuery('#vc_delivery_fee').val();
-        var vc_minimum_order = jQuery('#vc_minimum_order').val();
         var isValid = true;
-        if(vc_city.length == 0 || vc_delivery_fee.length == 0 || vc_minimum_order.length == 0){
+        if(vc_city.length == 0){
             isValid = false;
             jQuery('.alert').show();
-     }
+        }
         if(isValid){
             jQuery('.alert').hide();
-        jQuery.ajax({
-            url: vc_ajax_url.ajax_url,
-            type: 'post',
-            // dataType: 'JSON',
-            data: {
-                action: 'vc_add_city_ajax_action',
-                city: vc_city,
-                delivery_fee: vc_delivery_fee,
-                minimum_order: vc_minimum_order,
-
-            },
-            success: function (data) {
-                jQuery('#vc_city').val('');
-               jQuery('#vc_delivery_fee').val('');
-               jQuery('#vc_minimum_order').val('');
-               jQuery('#vc_tableBody').html(data);
-               jQuery('.alert').hide();
-            }
-        });
-         }
+                jQuery.ajax({
+                    url: vc_ajax_url.ajax_url,
+                    type: 'post',
+                    // dataType: 'JSON',
+                    data: {
+                        action: 'vc_add_city_ajax_action',
+                        city: vc_city,
+                       
+                    },
+                    success: function (data) {
+                        jQuery('#vc_city').val('');
+                        jQuery('#vc_tableBody').html(data);
+                        jQuery('.alert').hide();
+                    }
+                });
+        }
     }
 //update city ajax call
     function vc_update_city_ajax() {
         var vc_city = jQuery('#vc_city').val();
-        var vc_delivery_fee = jQuery('#vc_delivery_fee').val();
-        var vc_minimum_order = jQuery('#vc_minimum_order').val();
         var vc_id = jQuery('#vc_id').val();
         var isValid = true;
-        if(vc_city.length == 0 || vc_delivery_fee.length == 0 || vc_minimum_order.length == 0){
+        if(vc_city.length == 0 ){
             isValid = false;
             jQuery('.alert').show();
         }
@@ -54,8 +46,7 @@
                     data: {
                         action: 'vc_update_city_ajax',
                         city: vc_city,
-                        delivery_fee: vc_delivery_fee,
-                        minimum_order: vc_minimum_order,
+                        
                         id: vc_id,
                     },
                     success: function (data) {
@@ -63,8 +54,6 @@
                     jQuery('#vc_add_button').css('display','block');
                     jQuery('#vc_update_button').css('display','none');
                     jQuery('#vc_city').val('');
-                    jQuery('#vc_delivery_fee').val('');
-                    jQuery('#vc_minimum_order').val('');
                     jQuery('#vc_id').val('id');
                     }
                 });
@@ -261,8 +250,11 @@ function vc_delete_time_ajax(id) {
     function vc_add_cityarea_ajax(){
         var cityId = jQuery('#city_id').val();
         var areaName = jQuery('#city_area').val();
+        var deliveryFee = jQuery('#delivery_fee').val();
+        var minimumOrder = jQuery('#minimum_order').val();
+        var times = jQuery('#times').val();
         var isValid = true;
-        if(cityId.length == 0 || areaName.length == 0){
+        if(cityId.length == 0 || areaName.length == 0 || deliveryFee.length == 0 || minimumOrder.length == 0){
             isValid = false;
             alert("All fields are required");
         }
@@ -274,11 +266,17 @@ function vc_delete_time_ajax(id) {
                 action: 'vc_add_cityarea_ajax_action',
                 cityId: cityId,
                 areaName: areaName,
+                deliveryFee: deliveryFee,
+                minimumOrder: minimumOrder,
+                times: times
             },
             success: function(data){
                 jQuery('#cityAreaTbody').html(data);  
                 jQuery('#city_id').prop('selectedIndex',0);        
+                jQuery('#times').prop('selectedIndex',0);        
                 jQuery('#city_area').val('');  
+                jQuery('#delivery_fee').val('');  
+                jQuery('#minimum_order').val('');  
                      
             }
         });
@@ -288,8 +286,11 @@ function vc_delete_time_ajax(id) {
 //Update city area ajax call
 
 function vc_update_cityarea_ajax(){
-        var cityId = jQuery('#city_id_update').val();
-        var areaName = jQuery('#city_area').val();
+        var cityId = jQuery('#hcity_id').val();
+        var areaName = jQuery('#hcity_area').val();
+        var deliveryFee = jQuery('#hdelivery_fee').val();
+        var minimumOrder = jQuery('#hminimum_order').val();
+        var times = jQuery('#htimes').val();
         var id = jQuery('#city_area_id').val()    
         var isValid = true;
         if(cityId.length == 0 || areaName.length == 0){
@@ -304,17 +305,16 @@ function vc_update_cityarea_ajax(){
                     action: 'vc_update_cityarea_ajax_action',
                     cityId: cityId,
                     areaName: areaName,
+                    deliveryFee: deliveryFee,
+                    minimumOrder: minimumOrder,
+                    times: times,
                     id:id,
                 },
                 success: function(data){
                     jQuery('#cityAreaTbody').html(data);  
-                    jQuery('#city_id').css('display','block');
-                    jQuery('#city_id_update').css('display','none');
-                    jQuery('#vc_add_cityarea').css('display','block');
-                    jQuery('#vc_update_cityarea').css('display','none');
-                    jQuery('#city_id').prop('selectedIndex',0);        
-                    jQuery('#city_area').val('');  
-                         
+                    jQuery('#visibleRow').css('display','block');
+                    jQuery('#hiddenRow').css('display','none');
+                     
                 }
             });
             }

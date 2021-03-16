@@ -13,8 +13,6 @@ function onlyNumberKey(evt) {
 
 function fill_form_for_edit(id){
     jQuery('#vc_city').val(jQuery('#city_'+id).text());
-    jQuery('#vc_delivery_fee').val(jQuery('#fee_'+id).text());
-    jQuery('#vc_minimum_order').val(jQuery('#minorder_'+id).text());
     jQuery('#vc_id').val(id);
     jQuery('#vc_add_button').css('display','none');
     jQuery('#vc_update_button').css('display','block');
@@ -35,17 +33,22 @@ function fill_timeslot_for_edit(id){
 
 //fill city area form
 function fill_cityarea_for_edit(id){
-    jQuery('#vc_add_cityarea').css('display','none');
-    jQuery('#vc_update_cityarea').css('display','block');
-    jQuery('#city_area').val(jQuery('#areaname_'+id).text());
-    jQuery('#city_id').css('display','none');
-    jQuery('#city_id_update').css('display','block');
-    jQuery('#city_area_id').val(id);
+    jQuery('#visibleRow').css('display','none');
+    jQuery('#hiddenRow').css('display','block');
     var city_name = jQuery('#cityid_'+id).text();
     var city_id = jQuery('#cityid_'+id).attr('alt');
-    jQuery('#set_cityid_update').text(city_name);
-    jQuery('#set_cityid_update').attr('val',city_id);
-
+    jQuery('#hcityOption').text(city_name);
+    jQuery('#hcityOption').attr('val',city_id);
+    var times = jQuery('#times_'+id).text();
+    jQuery('#htimesOptions').text(times);
+    jQuery('#htimesOptions').attr('val',times);
+    var areaName = jQuery('#areaname_'+id).text();
+    var delivery = jQuery('#delivery_'+id).text();
+    var minOrder = jQuery('#minorder_'+id).text();
+    jQuery('#hcity_area').val(areaName);
+    jQuery('#hdelivery_fee').val(delivery);
+    jQuery('#hminimum_order').val(minOrder);
+    jQuery('#city_area_id').val(id);
 }
 //Fill city category form
 function fill_assign_city_for_edit(id){

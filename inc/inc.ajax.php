@@ -5,15 +5,13 @@ function vc_add_city_ajax_action()
     global $wpdb;
     $table_name = $wpdb->prefix ."vc_cities_group";
     $city = $_POST['city'];
-    $delivery_fee = $_POST['delivery_fee'];
-    $minimum_order = $_POST['minimum_order'];
     $wpdb->insert($table_name,
-        array('city' =>$city,'delivery_fee' => $delivery_fee, 'minimum_order' => $minimum_order)
+        array('city' =>$city)
     );
     $totalCity = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`",OBJECT);
     $htmlContent = '';
     foreach($totalCity as $city){
-        $htmlContent .="<tr><td><span id='city_{$city->id}'>{$city->city}</span></td><td><span id='fee_{$city->id}'>{$city->delivery_fee}</span></td><td><span id='minorder_{$city->id}'>{$city->minimum_order}</span></td><td><button alt='{$city->id}' type='button' class='btn btn-sm btn-primary my-btn-edit mr-4' onclick='fill_form_for_edit({$city->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
+        $htmlContent .="<tr><td><span id='city_{$city->id}'>{$city->city}</span></td><td><button alt='{$city->id}' type='button' class='btn btn-sm btn-primary my-btn-edit mr-4' onclick='fill_form_for_edit({$city->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
         </button><button alt='{$city->id}' type='button' class='btn btn-sm btn-danger my-btn-delete' onclick='vc_delete_city_ajax({$city->id})'><i class='fa fa-remove' aria-hidden='true'></i>
         </button></td></tr>";
     }
@@ -31,19 +29,15 @@ function vc_update_city_ajax()
     global $wpdb;
     $table_name = $wpdb->prefix ."vc_cities_group";
     $city = $_POST['city'];
-    $delivery_fee = $_POST['delivery_fee'];
-    $minimum_order = $_POST['minimum_order'];
     $id = $_POST['id'];
 
     $wpdb->update($table_name, array(
         'city' =>$city,
-        'delivery_fee' => $delivery_fee,
-        'minimum_order' => $minimum_order,
     ), array('id' => $id));
     $totalCity = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`",OBJECT);
     $htmlContent = '';
     foreach($totalCity as $city){
-        $htmlContent .="<tr><td><span id='city_{$city->id}'>{$city->city}</span></td><td><span id='fee_{$city->id}'>{$city->delivery_fee}</span></td><td><span id='minorder_{$city->id}'>{$city->minimum_order}</span></td><td><button alt='{$city->id}' type='button' class='btn btn-sm btn-primary my-btn-edit mr-4' onclick='fill_form_for_edit({$city->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
+        $htmlContent .="<tr><td><span id='city_{$city->id}'>{$city->city}</span></td><td><button alt='{$city->id}' type='button' class='btn btn-sm btn-primary my-btn-edit mr-4' onclick='fill_form_for_edit({$city->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
         </button><button alt='{$city->id}' type='button' class='btn btn-sm btn-danger my-btn-delete' onclick='vc_delete_city_ajax({$city->id})'><i class='fa fa-remove' aria-hidden='true'></i>
         </button></td></tr>";
     }
@@ -276,9 +270,21 @@ function vc_add_cityarea_ajax_action()
     $table_name = $wpdb->prefix ."vc_city_areas";
     $cityId = $_POST['cityId'];
     $areaName = $_POST['areaName'];
+    $deliveryFee = $_POST['deliveryFee'];
+    $minimumOrder = $_POST['minimumOrder'];
+    $times = $_POST['times'];
+
     $wpdb->insert($table_name,
-        array('city_id' =>$cityId,'area_name' => $areaName,'city' =>getCityName($cityId))
+        array(
+            'city_id' =>$cityId,
+            'area_name' => $areaName,
+            'city' => getCityName($cityId), 
+            'delivery_fee' => $deliveryFee, 
+            'minimum_order' => $minimumOrder, 
+            'timeslot' => $times
+            )
     );
+
     $cityAreas = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`", OBJECT); 
    
     $htmlContent = '';
@@ -287,6 +293,9 @@ function vc_add_cityarea_ajax_action()
         $htmlContent .="<tr>
         <td><span id='cityid_{$cityarea->id}' alt='{$cityarea->city_id}'>{$cityname}</span></td>
         <td><span id='areaname_{$cityarea->id}' >{$cityarea->area_name}</span></td>
+        <td><span id='delivery_{$cityarea->id}' >{$cityarea->delivery_fee}</span></td>
+        <td><span id='minorder_{$cityarea->id}' >{$cityarea->minimum_order}</span></td>
+        <td><span id='times_{$cityarea->id}' >{$cityarea->timeslot}</span></td>
         <td><button alt={$cityarea->id}' type='button' class='btn btn-sm btn-primary mr-4' onclick='fill_cityarea_for_edit({$cityarea->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
           </button><button alt='{$cityarea->id}' type='button' class='btn btn-sm btn-danger' onclick='vc_delete_cityarea_ajax({$cityarea->id})'><i class='fa fa-remove' aria-hidden='true'></i>
           </button></td>
@@ -308,8 +317,19 @@ function vc_update_cityarea_ajax_action()
     $table_name = $wpdb->prefix ."vc_city_areas";
     $cityId = $_POST['cityId'];
     $areaName = $_POST['areaName'];
+    $deliveryFee = $_POST['deliveryFee'];
+    $minimumOrder = $_POST['minimumOrder'];
+    $times = $_POST['times'];
     $id = $_POST['id'];
-    $wpdb->update($table_name, array('city_id' =>$cityId,'area_name' => $areaName,'city' =>getCityName($cityId)), array('id' => $id));
+    $wpdb->update($table_name, 
+            array(
+                'city_id' =>$cityId,
+                'area_name' => $areaName,
+                'city' =>getCityName($cityId),
+                'delivery_fee' => $deliveryFee, 
+                'minimum_order' => $minimumOrder, 
+                'timeslot' => $times
+            ), array('id' => $id));
     $cityAreas = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`", OBJECT); 
    
     $htmlContent = '';
@@ -318,13 +338,15 @@ function vc_update_cityarea_ajax_action()
         $htmlContent .="<tr>
         <td><span id='cityid_{$cityarea->id}' alt='{$cityarea->city_id}'>{$cityname}</span></td>
         <td><span id='areaname_{$cityarea->id}' >{$cityarea->area_name}</span></td>
+        <td><span id='delivery_{$cityarea->id}' >{$cityarea->delivery_fee}</span></td>
+        <td><span id='minorder_{$cityarea->id}' >{$cityarea->minimum_order}</span></td>
+        <td><span id='times_{$cityarea->id}' >{$cityarea->timeslot}</span></td>
         <td><button alt={$cityarea->id}' type='button' class='btn btn-sm btn-primary mr-4' onclick='fill_cityarea_for_edit({$cityarea->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
           </button><button alt='{$cityarea->id}' type='button' class='btn btn-sm btn-danger' onclick='vc_delete_cityarea_ajax({$cityarea->id})'><i class='fa fa-remove' aria-hidden='true'></i>
           </button></td>
         </tr>";
     }
     echo $htmlContent;
-    wp_die();
 
 }
 
