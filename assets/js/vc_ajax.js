@@ -4,34 +4,7 @@
     function vc_add_city_ajax() {
         jQuery('#errorDelete').css('display','none');
         var vc_city = jQuery('#vc_city').val();
-        var isValid = true;
-        if(vc_city.length == 0){
-            isValid = false;
-            jQuery('.alert').show();
-        }
-        if(isValid){
-            jQuery('.alert').hide();
-                jQuery.ajax({
-                    url: vc_ajax_url.ajax_url,
-                    type: 'post',
-                    // dataType: 'JSON',
-                    data: {
-                        action: 'vc_add_city_ajax_action',
-                        city: vc_city,
-                       
-                    },
-                    success: function (data) {
-                        jQuery('#vc_city').val('');
-                        jQuery('#vc_tableBody').html(data);
-                        jQuery('.alert').hide();
-                    }
-                });
-        }
-    }
-//update city ajax call
-    function vc_update_city_ajax() {
-        var vc_city = jQuery('#vc_city').val();
-        var vc_id = jQuery('#vc_id').val();
+        var strong_cate = jQuery('#strong_cate').val();
         var isValid = true;
         if(vc_city.length == 0 ){
             isValid = false;
@@ -44,9 +17,40 @@
                     type: 'post',
                     // dataType: 'JSON',
                     data: {
+                        action: 'vc_add_city_ajax_action',
+                        city: vc_city,
+                        strongCate: strong_cate, 
+                       
+                    },
+                    success: function (data) {
+                        jQuery('#vc_city').val('');
+                        jQuery('#strong_cate').prop('selectedIndex',0);
+                        jQuery('#vc_tableBody').html(data);
+                        jQuery('.alert').hide();
+                    }
+                });
+        }
+    }
+//update city ajax call
+    function vc_update_city_ajax() {
+        var vc_city = jQuery('#hvc_city').val();
+        var strong_cate = jQuery('#hstrong_cate').val();
+        var vc_id = jQuery('#vc_id').val();
+        var isValid = true;
+        if(vc_city.length == 0){
+            isValid = false;
+            jQuery('.alert').show();
+        }
+        if(isValid){
+            jQuery('.alert').hide();
+                jQuery.ajax({
+                    url: vc_ajax_url.ajax_url,
+                    type: 'post',
+                    // dataType: 'JSON',
+                    data: {
                         action: 'vc_update_city_ajax',
                         city: vc_city,
-                        
+                        strongCate: strong_cate,
                         id: vc_id,
                     },
                     success: function (data) {
@@ -340,10 +344,9 @@ function vc_update_cityarea_ajax(){
     //Assign city category ajax call
 
     function vc_assign_city_ajax( ){
-        var cityId = jQuery('#city_id').val();
         var categoryId = jQuery('#category_id').val();
         var isValid = true;
-        if(cityId.length == 0 || categoryId.length == 0){
+        if(categoryId.length == 0){
             isValid = false;
             alert("All fields are required");
         }
@@ -354,12 +357,10 @@ function vc_update_cityarea_ajax(){
             type: 'post',
             data: {
                 action: 'vc_add_assign_category_ajax_action',
-                cityId: cityId,
                 categoryId: categoryId,
             },
             success: function(data){
                 jQuery('#cityCategoryTbody').html(data);  
-                jQuery('#city_id').prop('selectedIndex',0);        
                 jQuery('#category_id').prop('selectedIndex',0);   
                      
             }
@@ -370,11 +371,11 @@ function vc_update_cityarea_ajax(){
     //Update Assign city category ajax call
 
     function vc_update_assigned_city_ajax( ){
-        var cityId = jQuery('#city_hidden_update').val();
+        
         var categoryId = jQuery('#category_hidden_id').val();
         var id = jQuery('#city_hidden_id').val();
         var isValid = true;
-        if(cityId == null || categoryId == null){
+        if(categoryId == null){
             isValid = false;
             alert("All fields are required");
         }
@@ -385,13 +386,13 @@ function vc_update_cityarea_ajax(){
             type: 'post',
             data: {
                 action: 'vc_update_assign_category_ajax_action',
-                cityId: cityId,
+               
                 categoryId: categoryId,
                 id:id,
             },
             success: function(data){
                 jQuery('#cityCategoryTbody').html(data);  
-                jQuery('#city_id').prop('selectedIndex',0);        
+                      
                 jQuery('#category_id').prop('selectedIndex',0);   
                 jQuery('#visible_row').css('display','block');
                 jQuery('#hidden_row').css('display','none');

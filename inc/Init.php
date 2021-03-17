@@ -20,6 +20,7 @@ class Init{
         array_push($queries, "CREATE TABLE IF NOT EXISTS $table_city (
             `id` int(11) NOT NULL AUTO_INCREMENT,                
             `city` text  NOT NULL,
+            `strong_category` text
              PRIMARY KEY (`id`)
            ) $charset_collate"
         );
@@ -45,9 +46,8 @@ class Init{
 
         array_push($queries, "CREATE TABLE IF NOT EXISTS $table_categories(
                 `id` int(11) NOT NULL AUTO_INCREMENT,
-                `city_id` int(11) NOT NULL,
+                `category` TEXT NOT NULL,
                 `category_id` int(11) NOT NULL,
-                `city` text,
                 PRIMARY KEY (`id`)
                 ) $charset_collate"
         );
@@ -77,9 +77,9 @@ class Init{
 
     function create_admin_pages(){
         add_menu_page('City Based Delivery','City Based Delivery','manage_options','city-based-delivery',array($this,'admin_index'),'dashicons-admin-multisite',10);
+        add_submenu_page( 'city-based-delivery','City Based Delivery' , 'Assign Categories', 'manage_options', 'assign-categories', array($this,'admin_assign_ategories'));
         add_submenu_page( 'city-based-delivery','City Based Delivery' , 'Add Cities', 'manage_options', 'city-based-delivery', array($this,'admin_index'));
         add_submenu_page( 'city-based-delivery','City Based Delivery' , 'Times', 'manage_options', 'add-times', array($this,'admin_add_times'));
-        add_submenu_page( 'city-based-delivery','City Based Delivery' , 'Assign Categories', 'manage_options', 'assign-categories', array($this,'admin_assign_ategories'));
         add_submenu_page( 'city-based-delivery','Add Time Slots' , 'Add Time Slots', 'manage_options', 'add-time-slots', array($this,'admin_time_slots'));
         add_submenu_page( 'city-based-delivery','Add City Areas' , 'Add City Areas', 'manage_options', 'add-city-areas', array($this,'admin_city_areas'));
     }

@@ -5,13 +5,14 @@ function vc_add_city_ajax_action()
     global $wpdb;
     $table_name = $wpdb->prefix ."vc_cities_group";
     $city = $_POST['city'];
+    $strongCate = $_POST['strongCate'];
     $wpdb->insert($table_name,
-        array('city' =>$city)
+        array('city' =>$city, 'strong_cate' => $strongCate)
     );
     $totalCity = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`",OBJECT);
     $htmlContent = '';
     foreach($totalCity as $city){
-        $htmlContent .="<tr><td><span id='city_{$city->id}'>{$city->city}</span></td><td><button alt='{$city->id}' type='button' class='btn btn-sm btn-primary my-btn-edit mr-4' onclick='fill_form_for_edit({$city->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
+        $htmlContent .="<tr><td><span id='city_{$city->id}'>{$city->city}</span></td><td><span id='strCate_{$city->id}'>{$city->strong_cate}</span></td><td><button alt='{$city->id}' type='button' class='btn btn-sm btn-primary my-btn-edit mr-4' onclick='fill_form_for_edit({$city->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
         </button><button alt='{$city->id}' type='button' class='btn btn-sm btn-danger my-btn-delete' onclick='vc_delete_city_ajax({$city->id})'><i class='fa fa-remove' aria-hidden='true'></i>
         </button></td></tr>";
     }
@@ -29,15 +30,17 @@ function vc_update_city_ajax()
     global $wpdb;
     $table_name = $wpdb->prefix ."vc_cities_group";
     $city = $_POST['city'];
+    $strongCate = $_POST['strongCate'];
     $id = $_POST['id'];
 
     $wpdb->update($table_name, array(
         'city' =>$city,
+        'strong_category' => $strongCate,
     ), array('id' => $id));
     $totalCity = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`",OBJECT);
     $htmlContent = '';
     foreach($totalCity as $city){
-        $htmlContent .="<tr><td><span id='city_{$city->id}'>{$city->city}</span></td><td><button alt='{$city->id}' type='button' class='btn btn-sm btn-primary my-btn-edit mr-4' onclick='fill_form_for_edit({$city->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
+        $htmlContent .="<tr><td><span id='city_{$city->id}'>{$city->city}</span></td><td><span id='strCate_{$city->id}'>{$city->strong_category}</span></td><td><button alt='{$city->id}' type='button' class='btn btn-sm btn-primary my-btn-edit mr-4' onclick='fill_form_for_edit({$city->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
         </button><button alt='{$city->id}' type='button' class='btn btn-sm btn-danger my-btn-delete' onclick='vc_delete_city_ajax({$city->id})'><i class='fa fa-remove' aria-hidden='true'></i>
         </button></td></tr>";
     }
@@ -389,20 +392,19 @@ function vc_add_assign_category_ajax_action()
 {
     global $wpdb;
     $table_name = $wpdb->prefix ."vc_city_categories";
-    $cityId = $_POST['cityId'];
-    $categoryId = $_POST['categoryId'];
+   $categoryId = $_POST['categoryId'];
     $wpdb->insert($table_name,
-        array('city_id' =>$cityId,'category_id' => $categoryId, 'city' =>getCityName($cityId))
+        array('category' =>getCateName($categoryId),'category_id' => $categoryId)
     );
     $categories = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`", OBJECT); 
    
     $htmlContent = '';
     foreach ($categories as $cate){
-        $cityname = getCityName($cate->city_id);
-        $catename = getCateName($cate->category_id);
+        // $cityname = getCityName($cate->city_id);
+        // $catename = getCateName($cate->category_id);
         $htmlContent .="<tr>
-        <td><span id='cityid_{$cate->id}' alt='{$cate->city_id}'>{$cityname}</span></td>
-        <td><span id='category_{$cate->id}' alt='{$cate->category_id}'>{$catename}</span></td>
+        <td><span id='cate_{$cate->id}' alt='{$cate->category}'>{$cate->category}</span></td>
+        <td><span id='category_{$cate->id}' alt='{$cate->category_id}'>{$cate->category_id}</span></td>
         <td><button alt={$cate->id}' type='button' class='btn btn-sm btn-primary mr-4' onclick='fill_assign_city_for_edit({$cate->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
           </button><button alt='{$cate->id}' type='button' class='btn btn-sm btn-danger' onclick='vc_delete_assign_city_ajax({$cate->id})'><i class='fa fa-remove' aria-hidden='true'></i>
           </button></td>
@@ -420,19 +422,16 @@ function vc_update_assign_category_ajax_action()
 {
     global $wpdb;
     $table_name = $wpdb->prefix ."vc_city_categories";
-    $cityId = $_POST['cityId'];
     $categoryId = $_POST['categoryId'];
     $id = $_POST['id'];
-    $wpdb->update($table_name, array('city_id' =>$cityId,'category_id' => $categoryId,'city' =>getCityName($cityId)), array('id' => $id));
+    $wpdb->update($table_name, array('category' =>getCateName($categoryId),'category_id' => $categoryId), array('id' => $id));
     $categories = $wpdb->get_results("SELECT * FROM $table_name ORDER BY `id`", OBJECT); 
    
     $htmlContent = '';
     foreach ($categories as $cate){
-        $cityname = getCityName($cate->city_id);
-        $catename = getCateName($cate->category_id);
         $htmlContent .="<tr>
-        <td><span id='cityid_{$cate->id}' alt='{$cate->city_id}'>{$cityname}</span></td>
-        <td><span id='category_{$cate->id}' alt='{$cate->category_id}'>{$catename}</span></td>
+        <td><span id='cate_{$cate->id}' alt='{$cate->category}'>{$cate->category}</span></td>
+        <td><span id='category_{$cate->id}' alt='{$cate->category_id}'>{$cate->category_id}</span></td>
         <td><button alt={$cate->id}' type='button' class='btn btn-sm btn-primary mr-4' onclick='fill_assign_city_for_edit({$cate->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
           </button><button alt='{$cate->id}' type='button' class='btn btn-sm btn-danger' onclick='vc_delete_assign_city_ajax({$cate->id})'><i class='fa fa-remove' aria-hidden='true'></i>
           </button></td>
@@ -458,11 +457,9 @@ function vc_delete_assigned_category_ajax()
    
     $htmlContent = '';
     foreach ($categories as $cate){
-        $cityname = getCityName($cate->city_id);
-        $catename = getCateName($cate->category_id);
         $htmlContent .="<tr>
-        <td><span id='cityid_{$cate->id}' alt='{$cate->city_id}'>{$cityname}</span></td>
-        <td><span id='category_{$cate->id}' alt='{$cate->category_id}'>{$catename}</span></td>
+        <td><span id='cate_{$cate->id}' alt='{$cate->category}'>{$cate->category}</span></td>
+        <td><span id='category_{$cate->id}' alt='{$cate->category_id}'>{$cate->category_id}</span></td>
         <td><button alt={$cate->id}' type='button' class='btn btn-sm btn-primary mr-4' onclick='fill_assign_city_for_edit({$cate->id})'><i class='fa fa-pencil' aria-hidden='true'></i>
           </button><button alt='{$cate->id}' type='button' class='btn btn-sm btn-danger' onclick='vc_delete_assign_city_ajax({$cate->id})'><i class='fa fa-remove' aria-hidden='true'></i>
           </button></td>

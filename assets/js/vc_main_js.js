@@ -12,10 +12,20 @@ function onlyNumberKey(evt) {
 } 
 
 function fill_form_for_edit(id){
-    jQuery('#vc_city').val(jQuery('#city_'+id).text());
+    jQuery('#visibleDiv').css('display','none');
+    jQuery('#hiddenDiv').css('display','block');
+    jQuery('#hvc_city').val(jQuery('#city_'+id).text());
+    var strCate = jQuery('#strCate_'+id).text();
+    if(strCate == ''){
+        jQuery('#hiddeStrCateOption').text("Assign Strong Category... ");
+        jQuery('#hiddeStrCateOption').attr('disabled','disabled');
+    }else{
+        jQuery('#hiddeStrCateOption').text(strCate);
+        jQuery('#hiddeStrCateOption').attr('val',strCate);
+    }
+    
     jQuery('#vc_id').val(id);
-    jQuery('#vc_add_button').css('display','none');
-    jQuery('#vc_update_button').css('display','block');
+  
 }
 
 //fill Time slot data
@@ -54,12 +64,8 @@ function fill_cityarea_for_edit(id){
 function fill_assign_city_for_edit(id){
     jQuery('#visible_row').css('display','none');
     jQuery('#hidden_row').css('display','block');
-    var city_name = jQuery('#cityid_'+id).text();
-    var city_id = jQuery('#cityid_'+id).attr('alt');
-    jQuery('#set_cityid_update').text(city_name);
-    jQuery('#set_cityid_update').attr('val',city_id);
-    var cate_name = jQuery('#category_'+id).text();
-    var cate_id = jQuery('#category_'+id).attr('alt');
+    var cate_name = jQuery('#cate_'+id).text();
+    var cate_id = jQuery('#category_'+id).text();
     jQuery('#set_hidden_city_update').text(cate_name);
     jQuery('#set_hidden_city_update').attr('val',cate_id);
     jQuery('#city_hidden_id').val(id);
